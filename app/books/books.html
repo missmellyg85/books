@@ -1,0 +1,26 @@
+<h2>Books</h2>
+
+<form ng-show="loggedIn">
+  <input placeholder="Title" ng-model="newBook.title">
+  <input placeholder="Author" ng-model="newBook.author">
+  <input placeholder="Condition" ng-model="newBook.condition">
+  <input placeholder="Category" ng-model="newBook.category">
+  <button type="submit" ng-click="addBook(newBook);newBook = null;">send</button>
+</form>
+
+<table class="table table-striped">
+  <tr>
+    <th ng-click="orderByField='title'; reverseSort=!reverseSort">Title</th>
+    <th ng-click="orderByField='author'; reverseSort=!reverseSort">Author</th>
+    <th ng-click="orderByField='condition'; reverseSort=!reverseSort">Condition</th>
+    <th ng-click="orderByField='category'; reverseSort=!reverseSort">Category</th>
+    <th ng-show="loggedIn">Taken?</th>
+  </tr>
+  <tr ng-repeat="book in books | orderBy:orderByField:reverseSort" ng-class="book.taken?'taken':''" ng-hide="!loggedIn && book.taken">
+    <td>{{book.title}}</td>
+    <td>{{book.author}}</td>
+    <td>{{book.condition}}</td>
+    <td>{{book.category}}</td>
+    <td ng-show="loggedIn"><input type="checkbox" value="taken" ng-model="book.taken" ng-click="books.$save(book)"/></td>
+  </tr>
+</table>

@@ -24,33 +24,6 @@ angular.module('myApp.login', ['firebase.utils', 'firebase.auth', 'ngRoute'])
         });
     };
 
-    $scope.createAccount = function() {
-      $scope.err = null;
-      if( assertValidAccountProps() ) {
-        var email = $scope.email;
-        var pass = $scope.pass;
-        // create user credentials in Firebase auth system
-        Auth.$createUser({email: email, password: pass})
-          .then(function() {
-            // authenticate so we have permission to write to Firebase
-            return Auth.$authWithPassword({ email: email, password: pass });
-          })
-          .then(function(user) {
-            // create a user profile in our data store
-            var ref = fbutil.ref('users', user.uid);
-            return fbutil.handler(function(cb) {
-              ref.set({email: email, name: name||firstPartOfEmail(email)}, cb);
-            });
-          })
-          .then(function(/* user */) {
-            // redirect to the account page
-            $location.path('/account');
-          }, function(err) {
-            $scope.err = errMessage(err);
-          });
-      }
-    };
-
     function assertValidAccountProps() {
       if( !$scope.email ) {
         $scope.err = 'Please enter an email address';
