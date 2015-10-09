@@ -1,9 +1,9 @@
 (function (angular) {
   "use strict";
 
-  var app = angular.module('myApp.amy', ['ngRoute', 'firebase.utils', 'firebase']);
+  var app = angular.module('myApp.amy', ['ngRoute', 'firebase.utils', 'firebase', 'myApp.utils']);
 
-  app.controller('AmyCtrl', ['$scope', 'amyList', function($scope, amyList) {
+  app.controller('AmyCtrl', ['$scope', 'amyList', 'csvToArrayUtil', function($scope, amyList, csvToArrayUtil) {
       $scope.amyStuff = amyList;
 
       $scope.conditionOptions = [
@@ -25,13 +25,39 @@
           });
         }
       };
+
+      $scope.addBatch = function(batStuff){
+        var parsed = csvToArrayUtil.convertCsvToArray(batStuff.csv, ",");
+        for(var i = 0; i <= parsed.length-1; i++){
+          var s = parsed[i];
+          console.log(s);
+          var stuff = {
+            item:checkNull(s[0]),
+            color:checkNull(s[1]),
+            brand:checkNull(s[2]),
+            size:checkNull(s[3]),
+            condition:checkNull(s[4]),
+            quantity:checkNull(s[5])
+          }
+          console.log(stuff);
+          $scope.amyStuff.$add(stuff);
+        }
+      };
     }]);
 
   app.factory('amyList', ['fbutil', '$firebaseArray', function(fbutil, $firebaseArray) {
     var ref = fbutil.ref('amy');
-    console.log($firebaseArray(ref));
     return $firebaseArray(ref);
   }]);
+
+  app.filter('conditionToText', function() {
+    return function(num) {
+      if(num == 3){return 'Excellent'}
+      else if(num == 2){return 'Great'}
+      else if(num == 1){return 'Fair'}
+      else {return ''}
+    };
+  });
 
   app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/amy', {

@@ -8,6 +8,7 @@ angular.module('myApp', [
     'myApp.account',
     'myApp.books',
     'myApp.amy',
+    'myApp.utils',
     'myApp.login'
   ])
 

@@ -1,5 +1,6 @@
 <h2>Amy Tack Sale</h2>
 
+<h3>One at a time form</h3>
 <form ng-show="loggedIn">
   <input placeholder="Item" ng-model="newStuff.item">
   <input placeholder="Color" ng-model="newStuff.color">
@@ -7,10 +8,17 @@
   <input placeholder="Size" ng-model="newStuff.size">
   <select ng-model="newStuff.condition" ng-options="option.rank as option.name for option in conditionOptions" />
   <input placeholder="Quantity" ng-model="newStuff.quantity">
-  <button type="submit" ng-click="addStuff(newStuff);newStuff = null;">send</button>
+  <button type="submit" class="btn" ng-click="addStuff(newStuff);newStuff = null;">Add</button>
 </form>
 
-<table class="table table-striped">
+<h3>Batch add, CSV only <button class="btn" ng-click="showBat=!showBat">Show/Hide</button></h3>
+<form ng-show="loggedIn && showBat">
+  <textarea cols="100" rows="10" ng-model="batStuff.csv"></textarea>
+  <button type="submit" class="btn" ng-click="addBatch(batStuff);batStuff = null;">Add Batch</button>
+</form>
+
+<div>There are {{amyStuff.length}} things</div>
+<table id="tack-list" class="table table-striped">
   <tr>
     <th ng-click="orderByField='item'; reverseSort=!reverseSort">Item</th>
     <th ng-click="orderByField='color'; reverseSort=!reverseSort">Color</th>
@@ -24,7 +32,7 @@
     <td>{{amy.color}}</td>
     <td>{{amy.brand}}</td>
     <td>{{amy.size}}</td>
-    <td>{{amy.condition}}</td>
+    <td>{{amy.condition | conditionToText}}</td>
     <td>{{amy.quantity}}</td>
     </tr>
 </table>
