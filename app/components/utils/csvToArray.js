@@ -63,7 +63,6 @@
           // let's check to see which kind of value we
           // captured (quoted or unquoted).
 
-            console.log("match", arrMatches);
           if (arrMatches[ 2 ]){
 
               // We found a quoted value. When we capture

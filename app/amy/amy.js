@@ -30,7 +30,6 @@
         var parsed = csvToArrayUtil.convertCsvToArray(batStuff.csv, ",");
         for(var i = 0; i <= parsed.length-1; i++){
           var s = parsed[i];
-          console.log(s);
           var stuff = {
             item:checkNull(s[0]),
             color:checkNull(s[1]),
@@ -39,7 +38,6 @@
             condition:checkNull(s[4]),
             quantity:checkNull(s[5])
           }
-          console.log(stuff);
           $scope.amyStuff.$add(stuff);
         }
       };
