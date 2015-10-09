@@ -1,0 +1,30 @@
+<h2>Amy Tack Sale</h2>
+
+<form ng-show="loggedIn">
+  <input placeholder="Item" ng-model="newStuff.item">
+  <input placeholder="Color" ng-model="newStuff.color">
+  <input placeholder="Brand" ng-model="newStuff.brand">
+  <input placeholder="Size" ng-model="newStuff.size">
+  <select ng-model="newStuff.condition" ng-options="option.rank as option.name for option in conditionOptions" />
+  <input placeholder="Quantity" ng-model="newStuff.quantity">
+  <button type="submit" ng-click="addStuff(newStuff);newStuff = null;">send</button>
+</form>
+
+<table class="table table-striped">
+  <tr>
+    <th ng-click="orderByField='item'; reverseSort=!reverseSort">Item</th>
+    <th ng-click="orderByField='color'; reverseSort=!reverseSort">Color</th>
+    <th ng-click="orderByField='brand'; reverseSort=!reverseSort">Brand</th>
+    <th ng-click="orderByField='size'; reverseSort=!reverseSort">Size</th>
+    <th ng-click="orderByField='condition'; reverseSort=!reverseSort">Condition</th>
+    <th ng-click="orderByField='quantity'; reverseSort=!reverseSort">Quantity</th>
+    </tr>
+  <tr ng-repeat="amy in amyStuff | orderBy:orderByField:reverseSort">
+    <td>{{amy.item}}</td>
+    <td>{{amy.color}}</td>
+    <td>{{amy.brand}}</td>
+    <td>{{amy.size}}</td>
+    <td>{{amy.condition}}</td>
+    <td>{{amy.quantity}}</td>
+    </tr>
+</table>

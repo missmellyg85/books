@@ -7,6 +7,7 @@ angular.module('myApp', [
     'myApp.home',
     'myApp.account',
     'myApp.books',
+    'myApp.amy',
     'myApp.login'
   ])
 
